@@ -1,6 +1,10 @@
 """Modified version of the example code from Janert,
 Feedback Control For Computer Systems
 
+Modified further by K Berry
+Added Derivative control to Controller class
+5 Feb 2014
+
 This modified version requires pandas, numpy, and matplotlib.
 
 If you use apt:
@@ -45,25 +49,34 @@ class Buffer:
         return self.queued
 
 class Controller:
-    def __init__( self, kp, ki ):
+    def __init__( self, kp, ki, kd ):
         """Initializes the controller.
 
         kp: proportional gain
         ki: integral gain
+	kd: derivative gain
         """
-        self.kp, self.ki = kp, ki
+        self.kp, self.ki, self.kd = kp, ki, kd
         self.i = 0       # Cumulative error ("integral")
+	self.d = 0	 # Rate of change of error ("derivative")
 
-    def work( self, e ):
+    def work( self, e, t ):
         """Computes the number of jobs to be added to the ready queue.
 
         e: error
+	t: current simulation time
 
         returns: float number of jobs
         """
-        self.i += e
+	global tprev
+	global eprev
+        self.i += e	 # Cumulative error
+	self.d = ( (e - eprev) / max(1,  (t - tprev)) ) # Derivative of error
+#	print e, t, self.i
+	eprev = e
+	tprev = t
 
-        return self.kp*e + self.ki*self.i
+        return self.kp*e + self.ki*self.i + self.kd*self.d
 
 # ============================================================
 
@@ -77,16 +90,17 @@ def closed_loop( c, p, tm=5000 ):
     returns: tuple of sequences (times, targets, errors)
     """
     def setpoint( t ):
-        if t < 100: return 0
-        if t < 300: return 50
-        return 10
+	return (t * .05)
+#        if t < 100: return 0
+#        if t < 300: return 50
+#        return 10
     
     y = 0
     res = []
     for t in range( tm ):
         r = setpoint(t)
         e = r - y
-        u = c.work(e)
+        u = c.work(e, t)
         y = p.work(u)
 
         #print t, r, e, u, y
@@ -96,7 +110,9 @@ def closed_loop( c, p, tm=5000 ):
 
 # ============================================================
 
-c = Controller( 1.25, 0.01 )
+eprev = 0	# global for tracking previous timestep's error
+tprev = 0	# global storing previous timestep
+c = Controller( 1.25, 0.01, 1.1)
 p = Buffer( 50, 10 )
 
 # run the simulation
