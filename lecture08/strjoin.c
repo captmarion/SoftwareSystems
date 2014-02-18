@@ -3,6 +3,9 @@
 Copyright 2014 Allen Downey
 License: Creative Commons Attribution-ShareAlike 3.0
 
+Modified by Ken Berry
+18 FEB 2014 - Software Systems, Spring 2014
+
 */
 
 #include <stdio.h>
@@ -22,14 +25,33 @@ char *tracks[] = {
 */
 char *strjoin(char *array[], int n)
 {
-    // TODO: fill this in
-    return NULL;
+	int i;
+	int len = 0;	//length of final string
+	char *buffer, *dest;
+
+	for (i = 0; i < n; i++) {
+		len += strlen(array[i]);
+//		printf("Length: %i, Iteration: %i\n", len, i); for testing
+	}
+
+	buffer = (char *)malloc( len * sizeof(char) );
+	buffer[0] = '\0';
+	dest = buffer;	//pointer to working position in buf
+	
+	for (i = 0; i < n; i++) {
+		strcpy(dest, array[i]);
+		dest += strlen(array[i]);
+	}
+
+	return buffer;
 }
 
 
 int main (int argc, char *argv[])
 {
-    char *s = strjoin(tracks, 5);
-    printf("%s\n", s);
-    return 0;
+
+	char *s = strjoin(tracks, 5);
+	printf("%s\n", s);
+	return 0;
+
 }
