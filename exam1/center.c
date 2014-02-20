@@ -3,6 +3,9 @@
 Copyright 2014 Allen Downey
 License: Creative Commons Attribution-ShareAlike 3.0
 
+Modified by Ken Berry, 20 FEB 2014
+SoftSys Spr 2014, Exam 1
+
 */
 
 #include <stdio.h>
@@ -18,8 +21,30 @@ License: Creative Commons Attribution-ShareAlike 3.0
 
 char *center(char *s, int n, char fillchar)
 {
-    // FILL THIS IN
-    //    return NULL;
+	int i, fsp;	//iterator and fill space
+	int frt, rr;	//fill space in front and to rear of string
+	int len = 0;	//length of given string
+	char *ret;	//string to return
+
+	len = strlen(s);
+	fsp = n - len;	//calc amount of fill characters needed
+	frt = fsp/2;	//front is half of the needed fill characters
+	rr = frt + (fsp%2);	//rr is front + the remainder
+	
+	ret = (char *)malloc( n * sizeof(char) ); //allocate memory
+
+/* The following for loop would concatenate to ret the number of fill characters
+determined by frt in front of the string, and then add the number of
+fill characters determined by rr after the string.
+*/
+
+	for (i = 0; i <= n; i++) {
+		if (i < frt) {
+		strcat(*ret, *fillchar 
+		}
+	}
+
+	return ret;
 }
 
 
