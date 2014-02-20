@@ -3,6 +3,9 @@
 Copyright 2014 Allen Downey
 License: Creative Commons Attribution-ShareAlike 3.0
 
+Modified by Ken Berry, 20 FEB 2014
+SoftSys Spring 2014, exam 1
+
 */
 
 #include <stdio.h>
@@ -10,7 +13,7 @@ License: Creative Commons Attribution-ShareAlike 3.0
 #include <string.h>
 #include <regex.h>
 
-#define NUM_TRACKS 5;
+#define NUM_TRACKS 5
 
 char tracks[][80] = {
     "So What",
@@ -66,14 +69,18 @@ void find_track_regex(char *pattern)
     /* I'm not sure this is necessary, but it's possible that if you
        let regex go out of scope without running regfree, it leaks
        (that is, leaves some allocated memory unfreed). */
-    regfree(regex);
+    regfree(&regex);
 }
 
 
 int main (int argc, char *argv[])
 {
-    char *target = 'F';
-    char *pattern = "Fr.*Fr.*";
+//    char *target[] = 'F';
+//    char *pattern[] = "Fr.*Fr.*";
+
+    char target[]  = "F";
+    char pattern[] = "Fr.*Fr.*";
+
 
     find_track(target);
     find_track_regex(pattern);
