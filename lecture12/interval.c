@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <string.h>
 
+
+
 // Get current time as seconds elapsed since the Epoch.
 time_t get_current_time() {
     time_t current_time = time(NULL);
@@ -29,21 +31,29 @@ char *convert_time(time_t t) {
     return strdup(c_time_string);
 }
 
+
 // Interval definition
 typedef struct {
     time_t start;
     time_t end;
 } Interval;
 
+
 // Returns a new Interval with the given start and end times.
 // If unable to allocate, prints an error message and exits.
 Interval *make_interval(time_t start, time_t end) {
-    struct Interval *i1;
-    i1 = (struct Interval *) malloc((sizeof(struct Interval));
+    Interval *i1;
+    i1 = (Interval *) malloc(sizeof(Interval));
 
-    i1 start 
-    // fill this in
-    return NULL;
+    if (i1 == NULL) {
+        (void) fprintf(stderr, "Failure to allocate space in heap.");
+        exit(EXIT_FAILURE);
+    }
+
+    i1->start = start;
+    i1->end = end; 
+
+    return i1;
 }
 
 // Computes the duration of an Interval using difftime.
