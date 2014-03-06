@@ -38,6 +38,10 @@ typedef struct {
 // Returns a new Interval with the given start and end times.
 // If unable to allocate, prints an error message and exits.
 Interval *make_interval(time_t start, time_t end) {
+    struct Interval *i1;
+    i1 = (struct Interval *) malloc((sizeof(struct Interval));
+
+    i1 start 
     // fill this in
     return NULL;
 }
