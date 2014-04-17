@@ -58,7 +58,7 @@ def make_graph(dirname):
     pyplot.ylabel('bytes received')
 
     if dirname == '.':
-        filename = 'timing.png'
+        filename = 'timingKen.png'
     else:
         filename = 'timing.%s.png' % dirname
 

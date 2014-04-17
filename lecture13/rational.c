@@ -52,5 +52,5 @@ int main(void)
     free_rational(rational);
     free_rational(square);
 
-    return EXIT_SUCCESS;
-}
+    return EXIT_SUCCESS;e
+
